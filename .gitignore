@@ -1,0 +1,43 @@
+# API keys and secrets
+.env
+.env.*
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+envdir/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+Thumbs.db
+.DS_Store
+
+# LaTeX build artifacts
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+*.toc
+
+# Experiment data (large files)
+experiments/data/*.json
+experiments/results/
+
+# Downloaded PDFs (large binary)
+arxiv-papers/*.pdf
+
+# Large binaries
+paper/tectonic_bin/
+paper/tectonic.exe
+paper/tectonic.zip
+paper/compile_output.txt

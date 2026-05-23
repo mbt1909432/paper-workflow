@@ -1,0 +1,21 @@
+[project]
+name = "ta-graphrag-experiments"
+version = "0.1.0"
+description = "Experiments for TA-GraphRAG paper"
+requires-python = ">=3.10"
+dependencies = [
+    "openai>=1.0.0",
+    "python-dotenv>=1.0.0",
+    "rank-bm25>=0.2.2",
+    "faiss-cpu>=1.7.0",
+    "sentence-transformers>=2.2.0",
+    "numpy>=1.24.0",
+    "requests>=2.31.0",
+    "tqdm>=4.65.0",
+    "matplotlib>=3.10.9",
+    "pyyaml>=6.0.3",
+]
+
+[project.scripts]
+run-experiment = "run_experiment:main"
+run-ablation = "run_ablation:main"
