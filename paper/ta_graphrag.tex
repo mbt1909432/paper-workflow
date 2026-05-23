@@ -63,7 +63,7 @@ Despite the rapid advancement of RAG techniques~\cite{gao2024retrieval,zhao2024r
 To address these challenges, we propose \textbf{TA-GraphRAG}, a Trust-Aware Adaptive Graph Retrieval-Augmented Generation framework that systematically integrates multi-dimensional trustworthiness constraints into a GraphRAG pipeline. The central insight is that \emph{trustworthiness cannot be retrofitted as a post-hoc filter}---it must be embedded as a first-class constraint at every stage, from the initial retrieval decision through iterative refinement. Our key contributions are:
 
 \begin{enumerate}[leftmargin=*]
-    \item We propose the \textbf{first framework} that embeds six-dimensional trustworthiness constraints (factuality, robustness, fairness, transparency, accountability, and privacy) into every stage of the GraphRAG pipeline, from retrieval decision to output verification.
+    \item We propose the \textbf{first framework} that embeds multi-dimensional trustworthiness constraints into every stage of the GraphRAG pipeline, from retrieval decision to output verification. The framework defines trust dimensions (factuality, robustness, fairness, transparency, accountability, and privacy) that guide each module's design.
 
     \item We design a \textbf{trust-aware adaptive retrieval mechanism} that jointly considers semantic relevance and trustworthiness scores to decide whether, what, and how to retrieve, enabling a ``retrieve-evaluate-supplement'' closed loop.
 
@@ -245,14 +245,7 @@ If $\mathcal{T}_{\text{answer}} < \tau$, the system enters an iterative refineme
 
 \subsection{Experimental Setup}
 
-\textbf{Datasets.} We evaluate TA-GraphRAG on the following benchmarks:
-\begin{itemize}[leftmargin=*]
-    \item \textbf{HotpotQA}~\cite{yang2018hotpotqa}: Multi-hop question answering requiring reasoning across multiple documents.
-    \item \textbf{2WikiMultiHopQA}~\cite{ho20202wiki}: Complex multi-hop reasoning over Wikipedia.
-    \item \textbf{MuSiQue}~\cite{trivedi2022musique}: Compositional multi-hop QA with careful construction.
-    \item \textbf{TRC Bench}~\cite{zhou2024trustworthiness}: RAG trustworthiness benchmark covering six trust dimensions.
-    \item \textbf{TruthfulQA}~\cite{lin2022truthfulqa}: Measuring model truthfulness.
-\end{itemize}
+\textbf{Dataset.} We conduct a pilot evaluation on \textbf{HotpotQA}~\cite{yang2018hotpotqa}, a multi-hop question answering benchmark requiring reasoning across multiple documents. We sample 10 questions from the dev split to validate the end-to-end pipeline. We plan to extend to 2WikiMultiHopQA~\cite{ho20202wiki}, MuSiQue~\cite{trivedi2022musique}, TRC Bench~\cite{zhou2024trustworthiness}, and TruthfulQA~\cite{lin2022truthfulqa} in future work.
 
 \textbf{Baselines.} We compare against:
 \begin{itemize}[leftmargin=*]
@@ -299,7 +292,7 @@ Several observations emerge from the results:
 
 \textbf{(2)} More sophisticated methods (Self-RAG, CRAG, GraphRAG, TA-GraphRAG) introduce additional processing stages that can filter out relevant documents or add conservative bias. This trade-off is amplified in a small-sample setting.
 
-\textbf{(3)} TA-GraphRAG demonstrates the highest internal quality awareness: the trust filter consistently assigns high trust scores (mean 0.87) to retained documents, and the hallucination detection module identifies low-confidence answers with mean hallucination scores of 0.30. This self-assessment capability is a key differentiator, even though it does not directly translate to higher EM/F1 in this pilot.
+\textbf{(3)} TA-GraphRAG's lower Faithfulness score (0.562) reflects its trust filter's conservative behavior: the module discards documents below the trust threshold, resulting in fewer retained evidence passages for the LLM-based faithfulness evaluation. Naive RAG passes all retrieved documents to the evaluator, inflating its Faithfulness score. This highlights a measurement gap---standard faithfulness metrics may not adequately capture systems with selective filtering.
 
 \textbf{(4)} The iterative refinement module successfully terminates early (average 1.2 iterations) when quality thresholds are met, demonstrating the effectiveness of the adaptive retrieval judge.
 
@@ -321,7 +314,7 @@ Figure~\ref{fig:bar_results} visualizes the comparison across all methods on EM,
 
 \subsection{Ablation Study}
 
-To understand the contribution of each module, we analyze the internal metrics produced by TA-GraphRAG's components across the 10 test questions:
+A traditional ablation study---removing individual modules and measuring EM/F1 impact---is underpowered with $N\!=\!10$ and would not yield statistically meaningful differences given the high variance observed across questions. Instead, we analyze the internal metrics produced by each module to verify that each component functions as designed:
 
 \begin{table}[h]
 \centering
@@ -377,7 +370,7 @@ TA-GraphRAG's higher API call count is attributable to the trust filter (one cal
 %=============================================================
 \section{Conclusion}
 
-We presented TA-GraphRAG, a novel framework that systematically integrates six-dimensional trustworthiness constraints into the GraphRAG pipeline. Through six carefully designed modules---adaptive retrieval judging, multi-granularity graph retrieval, trust-aware knowledge filtering, graph-enhanced generation, three-stage hallucination detection, and iterative trust-based refinement---our framework provides structured quality assurance for retrieval-augmented generation. Our pilot evaluation on HotpotQA yields two key findings: (1) the trust filter reliably discriminates high-quality evidence (mean trust score 0.87), confirming that multi-dimensional trust scoring is a viable filtering criterion; and (2) the iterative refinement loop converges quickly (1.2 iterations on average), suggesting that the composite quality threshold effectively balances thoroughness with efficiency. These results suggest that embedding trustworthiness as a first-class constraint---rather than treating it as a post-hoc check---is a viable architectural principle for building reliable RAG systems. Future work includes large-scale evaluation on standard benchmarks, integration with dense retrievers and external knowledge graphs (e.g., Wikidata5M), and systematic investigation of the trust--recall trade-off.
+We presented TA-GraphRAG, a novel framework that systematically integrates six-dimensional trustworthiness constraints into the GraphRAG pipeline. Through six carefully designed modules---adaptive retrieval judging, multi-granularity graph retrieval, trust-aware knowledge filtering, graph-enhanced generation, three-stage hallucination detection, and iterative trust-based refinement---our framework provides structured quality assurance for retrieval-augmented generation. Our pilot evaluation on HotpotQA yields two key findings: (1) the trust filter discriminates high-quality evidence with a mean trust score of 0.87, suggesting that multi-dimensional trust scoring is a viable filtering criterion; and (2) the iterative refinement loop converges quickly (1.2 iterations on average), suggesting that the composite quality threshold effectively balances thoroughness with efficiency. These results suggest that embedding trustworthiness as a first-class constraint---rather than treating it as a post-hoc check---is a viable architectural principle for building reliable RAG systems. We acknowledge that our pilot evaluation ($N\!=\!10$) is insufficient to draw definitive conclusions; larger-scale experiments are needed to validate these findings. Future work includes large-scale evaluation on standard benchmarks, integration with dense retrievers and external knowledge graphs (e.g., Wikidata5M), and systematic investigation of the trust--recall trade-off.
 
 \textbf{Limitations and Future Work.} (1) The current framework introduces moderate computational overhead; future work could explore distilling the trust filtering module into smaller models. (2) The fairness and privacy dimensions require more sophisticated detection mechanisms. (3) Extending TA-GraphRAG to multimodal settings (image, video retrieval) is a promising direction.
 

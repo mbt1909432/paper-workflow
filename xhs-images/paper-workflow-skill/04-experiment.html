@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet"/>
+<style>
+  body { font-family: 'Noto Sans SC', sans-serif; margin: 0; padding: 0; background: #FBFBFA; color: #37352F; }
+  .card { background: #FFFFFF; border: 1px solid #E8E7E3; border-radius: 12px; padding: 32px; margin-bottom: 20px; }
+  .tip-row { display: flex; align-items: flex-start; gap: 16px; padding: 16px 0; border-bottom: 1px solid #F1F1EF; }
+  .tip-row:last-child { border-bottom: none; }
+  .tip-icon { width: 44px; height: 44px; border-radius: 8px; background: #F1F1EF; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+  .code-block { background: #F7F6F3; border-radius: 8px; padding: 16px 20px; font-family: 'Courier New', monospace; font-size: 17px; margin-top: 12px; color: #37352F; border-left: 3px solid #E8E7E3; }
+  .tag { display: inline-block; padding: 4px 12px; border-radius: 4px; font-size: 14px; font-weight: 500; }
+</style>
+</head>
+<body style="width:1080px;height:1440px;">
+<div style="padding:64px 64px 48px 64px; height:100%; display:flex; flex-direction:column;">
+
+  <!-- Header -->
+  <div style="margin-bottom:36px;">
+    <div style="font-size:14px;color:#9B9A97;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px;">EXPERIMENT TIPS</div>
+    <h2 style="font-size:42px;font-weight:900;margin:0 0 12px 0;">实验实现要点</h2>
+    <div style="width:60px;height:3px;background:#37352F;border-radius:2px;"></div>
+  </div>
+
+  <!-- Card 1: Interface Contract -->
+  <div class="card">
+    <div style="font-size:26px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:10px;">
+      <span>📋</span> 先定义接口，再写代码
+    </div>
+    <p style="font-size:20px;color:#9B9A97;margin:0 0 12px 0;line-height:1.5;">模块接口不匹配是 #1 bug 来源。先写签名再写实现：</p>
+    <div class="code-block">
+      <span style="color:#9B9A97;"># Module 1: returns (bool, float)</span><br/>
+      def judge_retrieval(q, t=0.7) -> tuple: ...<br/><br/>
+      <span style="color:#9B9A97;"># Module 2: returns dict</span><br/>
+      def retrieve(q, docs, kg) -> dict: ...<br/><br/>
+      <span style="color:#9B9A97;"># Module 3: returns (list, list)</span><br/>
+      def filter_trust(q, docs) -> tuple: ...
+    </div>
+  </div>
+
+  <!-- Card 2: Testing Strategy -->
+  <div class="card">
+    <div style="font-size:26px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:10px;">
+      <span>🧪</span> 小规模测试 → 确认 → 全量跑
+    </div>
+    <div class="tip-row">
+      <div class="tip-icon">1️⃣</div>
+      <div>
+        <div style="font-size:20px;font-weight:600;">10 条测试验证流程</div>
+        <div style="font-size:17px;color:#9B9A97;">确认 pipeline 无报错、结果格式正确</div>
+      </div>
+    </div>
+    <div class="tip-row">
+      <div class="tip-icon">2️⃣</div>
+      <div>
+        <div style="font-size:20px;font-weight:600;">用户确认后全量跑</div>
+        <div style="font-size:17px;color:#9B9A97;">先报告 API 费用估算，等用户确认</div>
+      </div>
+    </div>
+    <div class="tip-row">
+      <div class="tip-icon">3️⃣</div>
+      <div>
+        <div style="font-size:20px;font-weight:600;">结果 JSON 自动填入表格</div>
+        <div style="font-size:17px;color:#9B9A97;">matplotlib 出图 → 复制到 paper/figures/</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card 3: Tech Stack -->
+  <div class="card">
+    <div style="font-size:26px;font-weight:700;margin-bottom:20px;display:flex;align-items:center;gap:10px;">
+      <span>🛠️</span> 实验技术栈
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:12px;">
+      <span class="tag" style="background:#EEFBF0;color:#1D7A41;">uv 包管理</span>
+      <span class="tag" style="background:#E8F0FE;color:#1A56DB;">DeepSeek API</span>
+      <span class="tag" style="background:#FFF8E1;color:#92610E;">BM25 检索</span>
+      <span class="tag" style="background:#F3E8FF;color:#6B21A8;">Knowledge Graph</span>
+      <span class="tag" style="background:#FEE2E2;color:#B91C1C;">matplotlib 可视化</span>
+      <span class="tag" style="background:#F1F5F9;color:#475569;">HotpotQA 数据集</span>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div style="margin-top:auto;border-top:1px solid #E8E7E3;padding-top:20px;display:flex;justify-content:space-between;">
+    <span style="color:#9B9A97;font-size:18px;">4/6</span>
+    <span style="color:#2383E2;font-size:18px;">左滑继续 →</span>
+  </div>
+</div>
+</body>
+</html>

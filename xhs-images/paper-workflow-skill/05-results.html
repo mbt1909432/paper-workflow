@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet"/>
+<style>
+  body { font-family: 'Noto Sans SC', sans-serif; margin: 0; padding: 0; background: #FBFBFA; color: #37352F; }
+  .result-card {
+    background: #FFFFFF; border: 1px solid #E8E7E3; border-radius: 12px;
+    padding: 24px 28px; margin-bottom: 16px;
+    display: flex; align-items: center; gap: 20px;
+  }
+  .result-num { font-size: 40px; font-weight: 900; color: #2383E2; min-width: 60px; text-align: center; }
+  .result-label { font-size: 20px; font-weight: 500; }
+  .result-detail { font-size: 17px; color: #9B9A97; }
+  .big-stat { text-align: center; padding: 32px; background: #F7F6F3; border-radius: 12px; }
+  .big-num { font-size: 56px; font-weight: 900; color: #37352F; }
+</style>
+</head>
+<body style="width:1080px;height:1440px;">
+<div style="padding:64px 64px 48px 64px; height:100%; display:flex; flex-direction:column;">
+
+  <!-- Header -->
+  <div style="margin-bottom:36px;">
+    <div style="font-size:14px;color:#9B9A97;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px;">RESULTS</div>
+    <h2 style="font-size:42px;font-weight:900;margin:0 0 12px 0;">实际产出成果</h2>
+    <div style="width:60px;height:3px;background:#37352F;border-radius:2px;"></div>
+  </div>
+
+  <!-- Big stats -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:28px;">
+    <div class="big-stat">
+      <div class="big-num">10</div>
+      <div style="font-size:20px;color:#9B9A97;margin-top:4px;">篇文献调研</div>
+    </div>
+    <div class="big-stat">
+      <div class="big-num">5</div>
+      <div style="font-size:20px;color:#9B9A97;margin-top:4px;">角度融合分析</div>
+    </div>
+  </div>
+
+  <!-- Result items -->
+  <div class="result-card">
+    <div class="result-num">1</div>
+    <div>
+      <div class="result-label">提出创新方法：TA-GraphRAG</div>
+      <div class="result-detail">Trust-Aware Adaptive Graph RAG，融合 GraphRAG + 可信性框架 + 自适应检索</div>
+    </div>
+  </div>
+
+  <div class="result-card">
+    <div class="result-num">6</div>
+    <div>
+      <div class="result-label">模块化 Pipeline 实现</div>
+      <div class="result-detail">检索判断 → 图检索 → 可信性过滤 → 图增强生成 → 幻觉检测 → 迭代优化</div>
+    </div>
+  </div>
+
+  <div class="result-card">
+    <div class="result-num">4</div>
+    <div>
+      <div class="result-label">Baseline 对比实验</div>
+      <div class="result-detail">Naive RAG / Self-RAG / CRAG / GraphRAG 四个基线方法</div>
+    </div>
+  </div>
+
+  <div class="result-card">
+    <div class="result-num">25</div>
+    <div>
+      <div class="result-label">引用全部外部验证</div>
+      <div class="result-detail">三层验证机制，每条引用可追溯到外部来源，0 编造</div>
+    </div>
+  </div>
+
+  <div class="result-card">
+    <div class="result-num">3</div>
+    <div>
+      <div class="result-label">可视化图表插入论文</div>
+      <div class="result-detail">柱状图 + 雷达图 + 热力图，matplotlib 生成</div>
+    </div>
+  </div>
+
+  <!-- GitHub box -->
+  <div style="margin-top:auto;background:#FFFFFF;border:1px solid #E8E7E3;border-radius:12px;padding:24px 28px;display:flex;align-items:center;gap:16px;">
+    <div style="width:48px;height:48px;border-radius:8px;background:#F1F1EF;display:flex;align-items:center;justify-content:center;font-size:24px;">📂</div>
+    <div>
+      <div style="font-size:20px;font-weight:600;">全部代码开源</div>
+      <div style="font-size:17px;color:#2383E2;">github.com/mbt1909432/paper-workflow</div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div style="margin-top:16px;border-top:1px solid #E8E7E3;padding-top:20px;display:flex;justify-content:space-between;">
+    <span style="color:#9B9A97;font-size:18px;">5/6</span>
+    <span style="color:#2383E2;font-size:18px;">左滑最后一页 →</span>
+  </div>
+</div>
+</body>
+</html>

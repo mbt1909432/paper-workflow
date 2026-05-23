@@ -138,6 +138,15 @@ uv run python -B ~/.agents/skills/latex-paper-en/scripts/analyze_abstract.py mai
 
 Common fixes: add concrete numbers to abstract, add transition before contributions, justify tool choices, add findings summary to conclusion.
 
+### Step 7.5: Self-Consistency Check (before submission)
+
+Apply [references/paper-quality-checklist.md](references/paper-quality-checklist.md) to verify:
+1. Contribution-verification mapping (Introduction → Method → Ablation → Conclusion)
+2. Numerical consistency (Abstract vs Table vs text)
+3. Terminology consistency
+4. Citation consistency
+5. Run data verification script if available
+
 ## Environment
 
 - **Python:** uv (`uv run python script.py`, `uv pip install package`)

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet"/>
+<style>
+  body { font-family: 'Noto Sans SC', sans-serif; margin: 0; padding: 0; }
+  .notion-bg { background: #FBFBFA; }
+  .notion-text { color: #37352F; }
+  .notion-gray { color: #9B9A97; }
+  .notion-blue { color: #2383E2; }
+  .notion-border { border: 1px solid #E8E7E3; }
+  .doodle { opacity: 0.12; position: absolute; }
+  .step-circle {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: #E8E7E3; display: flex; align-items: center;
+    justify-content: center; font-size: 13px; font-weight: 500;
+    color: #37352F; flex-shrink: 0;
+  }
+</style>
+</head>
+<body class="notion-bg" style="width:1080px;height:1440px;">
+<div style="padding:72px 64px 64px 64px; height:100%; display:flex; flex-direction:column; justify-content:center; position:relative;">
+
+  <!-- Decorative doodles -->
+  <svg class="doodle" style="top:60px;right:80px;width:120px;height:120px;" viewBox="0 0 120 120">
+    <circle cx="60" cy="60" r="50" fill="none" stroke="#37352F" stroke-width="1.5" stroke-dasharray="4 6"/>
+  </svg>
+  <svg class="doodle" style="bottom:120px;left:60px;width:80px;height:80px;" viewBox="0 0 80 80">
+    <rect x="10" y="10" width="60" height="60" rx="8" fill="none" stroke="#37352F" stroke-width="1.5" transform="rotate(15 40 40)"/>
+  </svg>
+
+  <!-- Tag -->
+  <div style="display:inline-flex;align-items:center;gap:8px;margin-bottom:32px;">
+    <span style="background:#E8E7E3;color:#37352F;padding:6px 16px;border-radius:4px;font-size:18px;font-weight:500;">
+      🔧 AI工具
+    </span>
+    <span style="background:#E8E7E3;color:#37352F;padding:6px 16px;border-radius:4px;font-size:18px;font-weight:500;">
+      📝 学术写作
+    </span>
+  </div>
+
+  <!-- Main Title -->
+  <h1 class="notion-text" style="font-size:64px;font-weight:900;line-height:1.2;margin:0 0 24px 0;letter-spacing:-1px;">
+    用 Claude Code<br/>从零写论文
+  </h1>
+
+  <p class="notion-text" style="font-size:28px;font-weight:400;margin:0 0 48px 0;opacity:0.7;line-height:1.5;">
+    7步全流程 AI 工作流 Skill<br/>
+    <span style="font-size:24px;opacity:0.5;">从文献调研到实验运行，一个 Skill 搞定</span>
+  </p>
+
+  <!-- Mini flow preview -->
+  <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:48px;">
+    <div style="display:flex;align-items:center;gap:6px;"><div class="step-circle">1</div><span style="font-size:16px;color:#9B9A97;">文献</span></div>
+    <span style="color:#D3D1CB;font-size:20px;">→</span>
+    <div style="display:flex;align-items:center;gap:6px;"><div class="step-circle">2</div><span style="font-size:16px;color:#9B9A97;">转换</span></div>
+    <span style="color:#D3D1CB;font-size:20px;">→</span>
+    <div style="display:flex;align-items:center;gap:6px;"><div class="step-circle">3</div><span style="font-size:16px;color:#9B9A97;">提取</span></div>
+    <span style="color:#D3D1CB;font-size:20px;">→</span>
+    <div style="display:flex;align-items:center;gap:6px;"><div class="step-circle">4</div><span style="font-size:16px;color:#9B9A97;">融合</span></div>
+    <span style="color:#D3D1CB;font-size:20px;">→</span>
+    <div style="display:flex;align-items:center;gap:6px;"><div class="step-circle">5</div><span style="font-size:16px;color:#9B9A97;">撰写</span></div>
+    <span style="color:#D3D1CB;font-size:20px;">→</span>
+    <div style="display:flex;align-items:center;gap:6px;"><div class="step-circle">6</div><span style="font-size:16px;color:#9B9A97;">实验</span></div>
+    <span style="color:#D3D1CB;font-size:20px;">→</span>
+    <div style="display:flex;align-items:center;gap:6px;"><div class="step-circle">7</div><span style="font-size:16px;color:#9B9A97;">润色</span></div>
+  </div>
+
+  <!-- Bottom line -->
+  <div style="border-top:1px solid #E8E7E3;padding-top:24px;display:flex;justify-content:space-between;align-items:center;">
+    <span class="notion-gray" style="font-size:20px;">全流程可复现 · 开源 Skill</span>
+    <span style="font-size:20px;color:#2383E2;font-weight:500;">右滑查看详情 →</span>
+  </div>
+</div>
+</body>
+</html>

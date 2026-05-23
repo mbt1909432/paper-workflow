@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet"/>
+<style>
+  body { font-family: 'Noto Sans SC', sans-serif; margin: 0; padding: 0; background: #FBFBFA; color: #37352F; }
+  .step-row {
+    display: flex; align-items: flex-start; gap: 20px;
+    padding: 20px 24px; margin-bottom: 8px;
+    background: #FFFFFF; border: 1px solid #E8E7E3; border-radius: 8px;
+  }
+  .step-num {
+    width: 40px; height: 40px; border-radius: 50%; background: #F1F1EF;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; font-weight: 700; color: #37352F; flex-shrink: 0;
+  }
+  .step-title { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+  .step-desc { font-size: 18px; color: #9B9A97; line-height: 1.4; }
+  .step-tool { font-size: 15px; color: #2383E2; margin-top: 4px; }
+  .arrow-down { text-align: center; color: #D3D1CB; font-size: 24px; margin: 4px 0; }
+</style>
+</head>
+<body style="width:1080px;height:1440px;">
+<div style="padding:64px 64px 48px 64px; height:100%; display:flex; flex-direction:column;">
+
+  <!-- Header -->
+  <div style="margin-bottom:40px;">
+    <div style="font-size:14px;color:#9B9A97;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px;">WORKFLOW OVERVIEW</div>
+    <h2 style="font-size:42px;font-weight:900;margin:0 0 12px 0;">7 步完整工作流</h2>
+    <div style="width:60px;height:3px;background:#37352F;border-radius:2px;"></div>
+  </div>
+
+  <!-- Steps -->
+  <div class="step-row">
+    <div class="step-num">1</div>
+    <div>
+      <div class="step-title">📚 文献收集</div>
+      <div class="step-desc">输入关键词 → arxiv 搜索 → 筛选 → 用户确认 → 批量下载</div>
+      <div class="step-tool">arxiv API · 并行下载</div>
+    </div>
+  </div>
+  <div class="arrow-down">↓</div>
+
+  <div class="step-row">
+    <div class="step-num">2</div>
+    <div>
+      <div class="step-title">📄 PDF 转 Markdown</div>
+      <div class="step-desc">批量转换 + 自动添加元信息 + 清洗格式</div>
+      <div class="step-tool">pymupdf4llm · N篇 = N个 subagent</div>
+    </div>
+  </div>
+  <div class="arrow-down">↓</div>
+
+  <div class="step-row">
+    <div class="step-num">3</div>
+    <div>
+      <div class="step-title">🔍 结构化信息提取</div>
+      <div class="step-desc">6维度提取：Abstract / Method / Contribution / Limitation / Evaluation / Insights</div>
+      <div class="step-tool">并行处理 · 为融合做准备</div>
+    </div>
+  </div>
+  <div class="arrow-down">↓</div>
+
+  <div class="step-row">
+    <div class="step-num">4</div>
+    <div>
+      <div class="step-title">🧩 多角度方法融合</div>
+      <div class="step-desc">5个角度横向对比 → Gap 分析 → 融合方案 → 选最佳</div>
+      <div class="step-tool">5个 subagent 并行分析</div>
+    </div>
+  </div>
+  <div class="arrow-down">↓</div>
+
+  <div class="step-row">
+    <div class="step-num">5</div>
+    <div>
+      <div class="step-title">✍️ LaTeX 论文撰写</div>
+      <div class="step-desc">自动生成完整论文 + 三层引用验证（拒绝编造）</div>
+      <div class="step-tool">Tectonic 编译 · references.bib 验证</div>
+    </div>
+  </div>
+  <div class="arrow-down">↓</div>
+
+  <div class="step-row">
+    <div class="step-num">6</div>
+    <div>
+      <div class="step-title">🧪 实验实现与运行</div>
+      <div class="step-desc">先定义接口契约 → 写代码 → 10条测试 → 确认再全量跑</div>
+      <div class="step-tool">uv · DeepSeek API · matplotlib</div>
+    </div>
+  </div>
+  <div class="arrow-down">↓</div>
+
+  <div class="step-row">
+    <div class="step-num">7</div>
+    <div>
+      <div class="step-title">✨ 论文润色</div>
+      <div class="step-desc">语法 / 逻辑 / 实验 / 去AI痕迹 / Abstract 诊断</div>
+      <div class="step-tool">latex-paper-en skill · 6模块自动分析</div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div style="margin-top:auto;border-top:1px solid #E8E7E3;padding-top:20px;display:flex;justify-content:space-between;">
+    <span style="color:#9B9A97;font-size:18px;">2/6</span>
+    <span style="color:#2383E2;font-size:18px;">左滑继续 →</span>
+  </div>
+</div>
+</body>
+</html>
