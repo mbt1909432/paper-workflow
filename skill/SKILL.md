@@ -2,11 +2,11 @@
 name: academic-paper-workflow
 description: >
   End-to-end academic paper writing workflow from literature collection to publication-ready PDF.
-  Covers 10 steps: (1) Literature search & download from arxiv, (2) PDF-to-Markdown conversion,
-  (3) Structured information extraction, (4) Multi-angle method fusion & new method proposal,
-  (5) LaTeX paper writing with proper citations, (6) Citation verification from external sources only,
-  (7) LaTeX compilation to PDF, (8) Experiment implementation & execution,
-  (9) Result visualization with matplotlib, (10) Paper polishing with latex-paper-en skill.
+  Covers 12 steps: (1) Literature search & download, (2) PDF-to-Markdown, (3) Structured extraction,
+  (3.5) Integrity gate, (4) Multi-angle method fusion, (4.5) Devil's advocate review,
+  (5) LaTeX writing with citations, (5.5) Citation verification with evidence hierarchy,
+  (6) Experiment implementation, (6.5) Visualization, (6.7) Integrity gate,
+  (7) Two-stage polishing, (7.5) Self-consistency check.
   Use when the user wants to write a research paper, thesis, or technical report from scratch.
   Triggers: "write a paper", "论文", "start paper project", "literature review",
   "帮我写论文", "论文工作流", "academic writing workflow".
@@ -34,6 +34,19 @@ Guide the user through the full paper writing pipeline. Record progress in the p
     ├── pyproject.toml
     └── results/
 ```
+
+## Iron Rules（铁律）
+
+Violation of any rule below is a hard stop — do not proceed until resolved.
+
+1. **No fabricated citations**: Every `\cite{}` must trace to an external source (verified in Step 5.5)
+2. **No auto-run large benchmarks**: Always confirm data volume and API cost with user first
+3. **No skipping integrity gates**: Step 3.5 and Step 6.3 must pass before proceeding
+4. **No circular refinement without convergence**: Each iteration must show measurable improvement; stop after 3 rounds with < 2% gain
+5. **No unsupported claims**: Every contribution in Introduction must map to Method section AND Experiment validation
+6. **No cherry-picking results**: Report all runs; if results are unfavorable, explain honestly rather than omitting
+7. **Small-scale test first**: Always validate pipeline on 10-20 samples before full run
+8. **Define interfaces before coding**: Module boundaries and data contracts must be agreed before implementation
 
 ## Pipeline Steps
 
@@ -73,9 +86,36 @@ Subagent prompt template: See [references/pdf2md-agent.md](references/pdf2md-age
 
 One subagent per paper. Extract to `arxiv-papers-extracted/` with sections: Abstract, Methodology, Contribution, Limitation, Evaluation, Key Insights. See [references/extraction-template.md](references/extraction-template.md).
 
+### Step 3.5: Integrity Gate — Extraction Verification
+
+**Must pass before proceeding to Step 4.**
+
+Check all extracted files for:
+- [ ] Every file has all 6 required sections (Abstract/Methodology/Contribution/Limitation/Evaluation/KeyInsights)
+- [ ] No placeholder text remaining (e.g., "TODO", "TBD", "[fill in]")
+- [ ] Methodology section contains concrete technique names, not vague descriptions
+- [ ] Evaluation section has at least one dataset or metric mentioned
+
+If > 30% of files fail, re-run extraction for failed files before proceeding.
+
 ### Step 4: Method Fusion
 
 Assign 3-5 fusion angles as parallel subagents. Each reads all extracted papers, produces comparison table + gap analysis + fusion proposals. User selects best proposal → becomes paper's core method.
+
+**Convergence criteria** (stop analyzing when):
+- All 3+ fusion angles cover the same core gaps
+- No new gap discovered in last 2 angles
+- User has selected a proposal
+
+### Step 4.5: Devil's Advocate Review
+
+After user selects the fusion proposal, run a dedicated adversarial review subagent that:
+1. Challenges the proposed method's assumptions (e.g., "Why would graph retrieval help when BM25 is sufficient?")
+2. Identifies 3-5 strongest objections a reviewer would raise
+3. For each objection, proposes a defense or design adjustment
+4. Outputs a "Reviewer Challenge Report" to `arxiv-papers-fusion/devils_advocate.md`
+
+User reviews challenges → adjusts method if needed → proceeds to Step 5.
 
 ### Step 5: LaTeX Paper Writing
 
@@ -98,7 +138,16 @@ Experiment data can be placeholders initially; mark for later replacement.
 2. **Own papers' metadata**: Check if citation is one of our collected papers
 3. **External verification**: WebSearch for remaining (ACL Anthology, Semantic Scholar)
 
-Generate `references.bib` with `note = {Verified: source}` for each entry.
+**Evidence hierarchy** (label each citation):
+| Level | Source | Example |
+|-------|--------|---------|
+| A | Peer-reviewed venue | ACL, NeurIPS, AAAI proceedings |
+| B | Preprint with venue | arXiv paper accepted at conference |
+| C | Preprint only | arXiv, SSRN (no peer review) |
+| D | Technical report / blog | Company whitepapers, Medium posts |
+| E | Unverified | Cannot find external source — MUST remove |
+
+Generate `references.bib` with `note = {Verified: source, Level: X}` for each entry.
 
 ### Step 5.6: LaTeX Compilation
 
@@ -123,7 +172,21 @@ Set up `experiments/` with `uv`. Standard structure: `src/` for code, `data/` fo
 
 matplotlib bar charts, radar charts, heatmaps. Save to `experiments/results/figures/` → copy to `paper/figures/`. Insert in .tex with `\includegraphics`.
 
-### Step 7: Paper Polishing
+### Step 6.7: Integrity Gate — Experiment Verification
+
+**Must pass before proceeding to Step 7.**
+
+Check:
+- [ ] Results JSON exists and is valid (no NaN, no empty fields)
+- [ ] All methods in results match methods described in Methodology section
+- [ ] No impossible values (EM/F1 > 100%, negative scores)
+- [ ] Results file timestamp is after experiment code last modification (stale results warning)
+
+If results fail validation, re-run experiments before polishing paper.
+
+### Step 7: Paper Polishing (Two-Stage Review)
+
+**Stage A: Full Review + Fix**
 
 **Tool:** `latex-paper-en` skill. Run analysis modules:
 
@@ -137,6 +200,14 @@ uv run python -B ~/.agents/skills/latex-paper-en/scripts/analyze_abstract.py mai
 ```
 
 Common fixes: add concrete numbers to abstract, add transition before contributions, justify tool choices, add findings summary to conclusion.
+
+**Stage B: Verification Review**
+
+After applying all fixes from Stage A, re-run `analyze_grammar.py` and `analyze_logic.py` to verify:
+- [ ] No new grammar errors introduced by fixes
+- [ ] Logic flow still holds (fixes didn't break argument chain)
+- [ ] All numbers mentioned in fixes match experiment results JSON
+- [ ] LaTeX still compiles without new warnings
 
 ### Step 7.5: Self-Consistency Check (before submission)
 
